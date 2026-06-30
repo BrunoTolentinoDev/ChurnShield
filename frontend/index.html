@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChurnShield — Detecção Inteligente de Churn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🛡️</span>
+                <div>
+                    <h1>ChurnShield</h1>
+                    <p>IA sob demanda · Automação inteligente</p>
+                </div>
+            </div>
+            <nav class="nav-tabs">
+                <button class="tab active" data-tab="chat">Chat</button>
+                <button class="tab" data-tab="dashboard">Dashboard</button>
+            </nav>
+        </header>
+
+        <main class="main">
+            <!-- Aba Chat -->
+            <section id="chat-view" class="view active">
+                <div class="chat-layout">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <h2>Conversa com Cliente</h2>
+                            <span class="status-dot online"></span>
+                        </div>
+                        <div id="chat-messages" class="chat-messages"></div>
+                        <div id="ia-loading" class="ia-loading hidden">
+                            <div class="spinner"></div>
+                            <span>IA analisando...</span>
+                        </div>
+                        <form id="chat-form" class="chat-form">
+                            <input
+                                type="number"
+                                id="response-time"
+                                placeholder="Tempo resposta (s)"
+                                min="0"
+                                step="1"
+                                title="Tempo de resposta em segundos (opcional)"
+                            >
+                            <input
+                                type="text"
+                                id="message-input"
+                                placeholder="Digite a mensagem do cliente..."
+                                autocomplete="off"
+                                required
+                            >
+                            <button type="submit" id="send-btn">Enviar</button>
+                        </form>
+                    </div>
+
+                    <aside class="side-panel">
+                        <h3>Painel de Análise</h3>
+                        <div class="panel-grid">
+                            <div class="panel-item">
+                                <label>IA foi chamada?</label>
+                                <span id="panel-ia-called" class="badge neutral">—</span>
+                            </div>
+                            <div class="panel-item full">
+                                <label>Motivo da chamada</label>
+                                <p id="panel-call-reason">Aguardando mensagem...</p>
+                            </div>
+                            <div class="panel-item full">
+                                <label>Regras acionadas</label>
+                                <ul id="panel-rules" class="rules-list">
+                                    <li class="empty">Nenhuma</li>
+                                </ul>
+                            </div>
+                            <div class="panel-item full">
+                                <label>Resumo atual</label>
+                                <p id="panel-summary" class="summary-text">—</p>
+                            </div>
+                            <div class="panel-item">
+                                <label>Risco</label>
+                                <span id="panel-risk" class="badge neutral">—</span>
+                            </div>
+                            <div class="panel-item">
+                                <label>Confiança</label>
+                                <span id="panel-confidence">—</span>
+                            </div>
+                            <div class="panel-item full">
+                                <label>Ação sugerida</label>
+                                <p id="panel-action">—</p>
+                            </div>
+                            <div class="panel-item">
+                                <label>Tokens</label>
+                                <span id="panel-tokens">0</span>
+                            </div>
+                            <div class="panel-item">
+                                <label>Custo</label>
+                                <span id="panel-cost">$0.000000</span>
+                            </div>
+                            <div class="panel-item full">
+                                <label>Economia acumulada</label>
+                                <span id="panel-economy" class="economy-value">$0.000000</span>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <!-- Aba Dashboard -->
+            <section id="dashboard-view" class="view">
+                <div class="dashboard-grid">
+                    <div class="metric-card">
+                        <span class="metric-label">Total de mensagens</span>
+                        <span id="metric-messages" class="metric-value">0</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Chamadas à IA</span>
+                        <span id="metric-ai-calls" class="metric-value">0</span>
+                    </div>
+                    <div class="metric-card highlight">
+                        <span class="metric-label">Chamadas evitadas</span>
+                        <span id="metric-avoided" class="metric-value">0</span>
+                    </div>
+                    <div class="metric-card highlight">
+                        <span class="metric-label">Economia</span>
+                        <span id="metric-economy-pct" class="metric-value">0%</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Tokens utilizados</span>
+                        <span id="metric-tokens" class="metric-value">0</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Valor gasto</span>
+                        <span id="metric-cost" class="metric-value">$0.00</span>
+                    </div>
+                    <div class="metric-card success">
+                        <span class="metric-label">Valor economizado</span>
+                        <span id="metric-saved" class="metric-value">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="history-section">
+                    <div class="history-card">
+                        <h3>Histórico de Decisões</h3>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>IA?</th>
+                                        <th>Regras</th>
+                                        <th>Risco</th>
+                                        <th>Custo</th>
+                                        <th>Economia</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="decisions-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="history-card">
+                        <h3>Histórico de Automações</h3>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Ação</th>
+                                        <th>Detalhes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="automations-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
