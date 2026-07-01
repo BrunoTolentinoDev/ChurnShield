@@ -15,8 +15,6 @@ class Settings(BaseSettings):
     )
 
     app_name: str = "ChurnShield"
-    app_env: str = "development"
-    debug: bool = True
 
     deepseek_api_key: str = ""
     deepseek_base_url: str = "https://api.deepseek.com"

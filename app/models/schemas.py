@@ -29,7 +29,6 @@ class AnalysisResult(BaseModel):
     cost_usd: float = 0.0
     economy_registered: bool = False
     economy_usd: float = 0.0
-    ia_analyzing: bool = False
 
 
 class MessageResponse(BaseModel):

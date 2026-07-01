@@ -8,7 +8,6 @@ from sqlalchemy.orm import Session
 
 from app.layers.ia.client import AIAnalysisResult
 from app.models.entities import AutomationLog, Decision
-from app.repositories.decision_repository import DecisionRepository
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +27,6 @@ class AutomationPipeline:
 
     def __init__(self, db: Session) -> None:
         self.db = db
-        self.decision_repo = DecisionRepository(db)
 
     def run(
         self,

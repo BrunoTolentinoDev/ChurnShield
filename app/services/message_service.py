@@ -122,6 +122,5 @@ class MessageService:
                 cost_usd=cost_usd,
                 economy_registered=despertador.economy_registered,
                 economy_usd=economy_usd,
-                ia_analyzing=ia_called,
             ),
         )
