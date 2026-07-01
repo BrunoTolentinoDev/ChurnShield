@@ -45,7 +45,7 @@ python -m pytest tests/ -v
 ## Estrutura
 
 ```
-app/          backend (API + lógica)
+app/          API + lógica do backend
 frontend/     interface do chat
 tests/        testes automatizados
 ```
