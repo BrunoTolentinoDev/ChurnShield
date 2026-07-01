@@ -24,7 +24,7 @@ Python, FastAPI, SQLite, JavaScript (sem framework), DeepSeek API, Pytest.
 
 ## Como rodar
 
-**Windows — um clique:** dê dois cliques em `rodar.bat`. Na primeira vez ele cria o venv, instala dependências e abre o navegador.
+**Windows — um clique:** dê dois cliques em **`Iniciar ChurnShield.vbs`** (recomendado). Na primeira vez cria o venv, instala dependências e abre o navegador. Se o `.bat` abrir no editor em vez de rodar, use sempre o `.vbs`.
 
 **Manual:**
 
